@@ -8,14 +8,17 @@
   src: url('/assets/fonts/JetBrainsMono-Regular.ttf') format('truetype');
 }
 
+$title_font: "Bebas Neue";
+$main_font: "JetBrains Mono";
+
 body {
   font-size: 16px;
-  font-family: "Jetbrains Mono"
+  font-family: $main_font
 }
 
 h1,h2,h3,h4,h5,h6 {
   font-optical-sizing: auto;
-  font-family: "Bebas Neue";
+  font-family: $title_font;
   font-weight: 400;
   font-style: normal;
   font-stretch: normal;
