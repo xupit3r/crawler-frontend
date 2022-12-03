@@ -9,21 +9,27 @@ const overviewStore = useOverviewStore();
 
 const state = reactive({
   loading: true,
-  poller: null
+  poller: {
+    timeout: null,
+    stop: false
+  }
 });
 
 overviewStore.getCounts().then(() => {
   state.loading = false;
   const refresher = () => {
-    setTimeout(() => {
-      overviewStore.getCounts().finally(refresher);
-    }, 500);
+    if (!state.stop) {
+      state.poller = setTimeout(() => {
+        overviewStore.getCounts().finally(refresher);
+      }, 500);
+    }
   };
 
   refresher();
 });
 
 onUnmounted(() => {
+  state.stop = true;
   clearTimeout(state.poller);
 });
 
@@ -32,7 +38,7 @@ onUnmounted(() => {
 <template>
   <RainbowTitle title="Dashboard" />
   <Loader v-if="state.loading" />
-  <div v-else class="content-flex row-left">
+  <div v-else class="content-flex row">
     <DashboardCard v-for="count in overviewStore.counts"
                    :key="count.name"
                    :title="count.name"
