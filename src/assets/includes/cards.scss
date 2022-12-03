@@ -1,5 +1,6 @@
-.dashboardCard {
+.card {
   display: flex;
+  width: 25%;
   flex-direction: column;
   padding: 2rem;
   background-color: $less_dark_color;
@@ -10,9 +11,12 @@
     color: $backgound_color;
     cursor: pointer;
     transition: background-color 1s ease, 
-                color 500ms ease;
+                color 500ms ease-in;
   }
-  
+}
+
+
+.dashboardCard {  
   &-title {
     font-family: $title_font;
     font-size: 1.25rem;
@@ -21,5 +25,43 @@
 
   &-value {
     font-size: 1.75rem;
+  }
+}
+
+.pageCard {
+  display: flex;
+  width: calc(33.33% - 4rem - 1rem);
+  row-gap: .25rem;
+  
+  &-url {
+    font-size: 1rem;
+    font-weight: bolder;
+  }
+
+  &-meta {
+    font-size: .75rem;
+
+    &:before {
+      margin-right: 5px;
+      font-weight: 100;
+      color: $subtle_color;
+      transition: color 500ms ease-in;
+    }
+  }
+
+  &:hover &-meta:before {
+    color: $backgound_color;
+  }
+
+  &-status:before {
+    content: 'Status';
+  }
+  
+  &-linkCount:before {
+    content: 'Links';
+  }
+
+  &-uniqueHosts:before {
+    content: 'Hosts';
   }
 }

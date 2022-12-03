@@ -13,10 +13,18 @@
       display: flex;
     }
 
-    &-flex.row-left {
-      align-items: left;
+    &-flex.row {
       flex-direction: row;
-      column-gap: 1.5em;
+      column-gap: 1em;
+      row-gap: 1em;
+    }
+
+    &-flex.row-wrap {
+      flex-wrap: wrap;
+    }
+
+    &-actions {
+      padding: 1.5rem;
     }
   }
 }

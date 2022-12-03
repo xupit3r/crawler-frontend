@@ -26,7 +26,7 @@ function goToLink () {
 </script>
 
 <template>
-  <div class="dashboardCard" @click="goToLink">
+  <div class="card dashboardCard" @click="goToLink">
     <span class="dashboardCard-title">{{title}}</span>
     <span class="dashboardCard-value">{{value}}</span>
   </div>
