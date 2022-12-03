@@ -13,6 +13,21 @@
     transition: background-color 1s ease, 
                 color 500ms ease-in;
   }
+
+  &:hover &-meta:before {
+    color: $backgound_color;
+  }
+
+  &-meta {
+    font-size: .75rem;
+
+    &:before {
+      margin-right: 5px;
+      font-weight: 100;
+      color: $subtle_color;
+      transition: color 500ms ease-in;
+    }
+  }
 }
 
 
@@ -29,28 +44,12 @@
 }
 
 .pageCard {
-  display: flex;
   width: calc(33.33% - 4rem - 1rem);
   row-gap: .25rem;
   
   &-url {
     font-size: 1rem;
     font-weight: bolder;
-  }
-
-  &-meta {
-    font-size: .75rem;
-
-    &:before {
-      margin-right: 5px;
-      font-weight: 100;
-      color: $subtle_color;
-      transition: color 500ms ease-in;
-    }
-  }
-
-  &:hover &-meta:before {
-    color: $backgound_color;
   }
 
   &-status:before {
@@ -63,5 +62,19 @@
 
   &-uniqueHosts:before {
     content: 'Hosts';
+  }
+}
+
+.siteCard {
+  width: calc(25% - 4rem - 1rem);
+  row-gap: .25rem;
+  
+  &-name {
+    font-size: 1rem;
+    font-weight: bolder;
+  }
+  
+  &-pages:before {
+    content: 'Pages';
   }
 }

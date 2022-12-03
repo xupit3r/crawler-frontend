@@ -12,8 +12,8 @@ const props = defineProps({
 <template>
   <div class="card pageCard">
     <span class="pageCard-url">{{page.url}}</span>
-    <span class="pageCard-meta pageCard-status">{{page.status}}</span>
-    <span class="pageCard-meta pageCard-linkCount">{{page.counts.links}}</span>
-    <span class="pageCard-meta pageCard-uniqueHosts">{{page.counts.hosts}}</span>
+    <span class="card-meta pageCard-status">{{page.status}}</span>
+    <span class="card-meta pageCard-linkCount">{{page.counts.links}}</span>
+    <span class="card-meta pageCard-uniqueHosts">{{page.counts.hosts}}</span>
   </div>
 </template>

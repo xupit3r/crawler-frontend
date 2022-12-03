@@ -9,6 +9,8 @@ const countToLink = (name) => {
     return 'queue';
   } else if (name === 'cooldown') {
     return 'cooldown';
+  } else if (name === 'sites') {
+    return 'sites';
   } else {
     return 'dashboard';
   }
