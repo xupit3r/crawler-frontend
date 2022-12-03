@@ -1,3 +1,5 @@
 <template>
-  <span class="loader"></span>
+  <div class="content-centered">
+    <span class="loader"></span>
+  </div>
 </template>
