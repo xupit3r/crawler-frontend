@@ -1,5 +1,19 @@
 import { defineStore } from 'pinia';
 
+const countToLink = (name) => {
+  if (name === 'pages') {
+    return 'pages';
+  } else if (name === 'links') {
+    return 'links';
+  } else if (name === 'queue') {
+    return 'queue';
+  } else if (name === 'cooldown') {
+    return 'cooldown';
+  } else {
+    return 'dashboard';
+  }
+}
+
 const state = () => ({
   counts: []
 });
@@ -13,7 +27,8 @@ const actions = {
       this.counts = counts.map(count => ({
         ...count,
         ...{
-          value: count.value.toLocaleString('en-US')
+          value: count.value.toLocaleString('en-US'),
+          link: countToLink(count.name)
         }
       }))
 

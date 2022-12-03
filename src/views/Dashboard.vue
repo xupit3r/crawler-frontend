@@ -36,6 +36,7 @@ onUnmounted(() => {
     <DashboardCard v-for="count in overviewStore.counts"
                    :key="count.name"
                    :title="count.name"
-                   :value="count.value" />
+                   :value="count.value"
+                   :link="count.link" />
   </div>
 </template>

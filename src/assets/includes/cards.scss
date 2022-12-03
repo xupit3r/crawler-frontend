@@ -9,11 +9,12 @@
     background-color: $subtle_color;
     color: $backgound_color;
     cursor: pointer;
-    transition: background-color 1s ease, color 500ms ease;
+    transition: background-color 1s ease, 
+                color 500ms ease;
   }
   
   &-title {
-    font-family: "Bebas Neue";
+    font-family: $title_font;
     font-size: 1.25rem;
     margin-bottom: .25rem;
   }
