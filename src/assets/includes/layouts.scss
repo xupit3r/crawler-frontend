@@ -1,0 +1,18 @@
+.container {
+  margin: 0 3rem;
+
+  .content {
+    margin: 0;
+    padding: 0;
+
+    &-flex {
+      display: flex;
+    }
+
+    &-flex.row-left {
+      align-items: left;
+      flex-direction: row;
+      column-gap: 1.5em;
+    }
+  }
+}

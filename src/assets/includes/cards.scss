@@ -1,0 +1,24 @@
+.dashboardCard {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: $less_dark_color;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: $subtle_color;
+    color: $backgound_color;
+    cursor: pointer;
+    transition: background-color 1s ease, color 500ms ease;
+  }
+  
+  &-title {
+    font-family: "Bebas Neue";
+    font-size: 1.25rem;
+    margin-bottom: .25rem;
+  }
+
+  &-value {
+    font-size: 1.75rem;
+  }
+}
