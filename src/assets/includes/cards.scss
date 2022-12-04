@@ -6,7 +6,7 @@
   background-color: $less_dark_color;
   border-radius: 2px;
 
-  &:hover {
+  &:not(.readOnly):hover {
     background-color: $subtle_color;
     color: $backgound_color;
     cursor: pointer;
@@ -14,7 +14,7 @@
                 color 500ms ease-in;
   }
 
-  &:hover &-meta:before {
+  &:not(.readOnly):hover &-meta:before {
     color: $backgound_color;
   }
 
@@ -77,4 +77,9 @@
   &-pages:before {
     content: 'Pages';
   }
+}
+
+.queueCard {
+  padding: 1rem;
+  width: 100%;
 }

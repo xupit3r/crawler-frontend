@@ -17,7 +17,8 @@ const countToLink = (name) => {
 }
 
 const state = () => ({
-  counts: []
+  counts: [],
+  upNext: []
 });
 
 const actions = {
@@ -34,7 +35,19 @@ const actions = {
         }
       }))
 
-      return counts;
+      return this.counts;
+    } catch (err) {
+      return err;
+    }
+  },
+  async getUpNext () {
+    try {
+      const resp = await fetch('/api/next/25');
+      const upNext = await resp.json();
+      
+      this.upNext = upNext;
+
+      return upNext;
     } catch (err) {
       return err;
     }

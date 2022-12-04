@@ -2,7 +2,7 @@
   margin: 0 3rem;
 
   .content {
-    margin: 0;
+    margin: 1rem 0;
     padding: 0;
 
     &-centered {
@@ -17,6 +17,11 @@
       flex-direction: row;
       column-gap: 1em;
       row-gap: 1em;
+    }
+    
+    &-flex.column {
+      flex-direction: column;
+      row-gap: .75em;
     }
 
     &-flex.row-wrap {

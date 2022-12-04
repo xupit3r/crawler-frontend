@@ -1,9 +1,10 @@
 <script setup>
-import { useOverviewStore } from '@/stores/overview';
 import { onUnmounted, reactive } from 'vue';
-import DashboardCard from '../components/DashboardCard.vue';
-import Loader from '../components/Loader.vue';
-import RainbowNav from '../components/RainbowNav.vue';
+import { useOverviewStore } from '@/stores/overview';
+import DashboardCounts from '@/components/DashboardCounts.vue';
+import DashboardUpNext from '@/components/DashboardUpNext.vue';
+import Loader from '@/components/Loader.vue';
+import RainbowNav from '@/components/RainbowNav.vue';
 
 const overviewStore = useOverviewStore();
 
@@ -20,8 +21,15 @@ const nav = [{
   to: 'dashboard'
 }];
 
-overviewStore.getCounts().then(() => {
-  state.loading = false;
+const upNextReq = overviewStore.getUpNext();
+const countsReq = overviewStore.getCounts();
+
+Promise.all([
+  upNextReq,
+  countsReq
+]).finally(() => state.loading = false);
+
+countsReq.then(() => {
   const refresher = () => {
     if (!state.stop) {
       state.poller = setTimeout(() => {
@@ -43,11 +51,8 @@ onUnmounted(() => {
 <template>
   <RainbowNav :nav="nav" />
   <Loader v-if="state.loading" />
-  <div v-else class="content-flex row">
-    <DashboardCard v-for="count in overviewStore.counts"
-                   :key="count.name"
-                   :title="count.name"
-                   :value="count.value"
-                   :link="count.link" />
+  <div v-else>
+    <DashboardCounts :counts="overviewStore.counts" />
+    <DashboardUpNext :items="overviewStore.upNext" />
   </div>
 </template>
