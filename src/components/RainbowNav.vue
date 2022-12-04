@@ -6,15 +6,13 @@ const props = defineProps({
   }
 });
 
-const colors = [
-  '#F8F988',
-  '#FF9E9E'
-];
+const currentColor = '#F8F988';
+const others = '#BCEAD5';
 
-const links = props.nav.map((item, idx) => ({
+const links = props.nav.map((item, idx, arr) => ({
   ...item,
   key: `${item.to}-${idx}`,
-  color: colors[idx % colors.length]
+  color: idx === arr.length - 1 ? currentColor : others
 }));
 </script>
 
