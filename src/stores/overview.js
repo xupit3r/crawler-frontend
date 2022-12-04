@@ -42,7 +42,7 @@ const actions = {
   },
   async getUpNext () {
     try {
-      const resp = await fetch('/api/next/25');
+      const resp = await fetch('/api/next/10');
       const upNext = await resp.json();
       
       this.upNext = upNext;
