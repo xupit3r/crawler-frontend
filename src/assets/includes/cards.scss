@@ -82,7 +82,13 @@
 .queueCard {
   padding: 1rem;
   width: calc(100% - 2rem);
-  
+
+  &-url {
+    width: calc(100% - 3rem);
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+
   &-processing {
     display: none;
     position: absolute;
@@ -92,7 +98,7 @@
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
-    color: #fff;
+    color: $base_color;
 
     &:before,
     &:after {
