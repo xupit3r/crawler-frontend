@@ -21,19 +21,19 @@ const nav = [{
   to: 'dashboard'
 }];
 
-const upNextReq = overviewStore.getUpNext();
-const countsReq = overviewStore.getCounts();
-
 Promise.all([
-  upNextReq,
-  countsReq
-]).finally(() => state.loading = false);
+  overviewStore.getUpNext(),
+  overviewStore.getCounts()
+]).finally(() => {
+  state.loading = false;
 
-countsReq.then(() => {
   const refresher = () => {
     if (!state.stop) {
       state.poller = setTimeout(() => {
-        overviewStore.getCounts().finally(refresher);
+        Promise.all([
+          overviewStore.getUpNext(),
+          overviewStore.getCounts()
+        ]).finally(refresher);
       }, 500);
     }
   };
