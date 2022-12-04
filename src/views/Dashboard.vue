@@ -3,7 +3,7 @@ import { useOverviewStore } from '@/stores/overview';
 import { onUnmounted, reactive } from 'vue';
 import DashboardCard from '../components/DashboardCard.vue';
 import Loader from '../components/Loader.vue';
-import RainbowTitle from '../components/RainbowTitle.vue';
+import RainbowNav from '../components/RainbowNav.vue';
 
 const overviewStore = useOverviewStore();
 
@@ -14,6 +14,11 @@ const state = reactive({
     stop: false
   }
 });
+
+const nav = [{
+  title: 'Dashboard',
+  to: 'dashboard'
+}];
 
 overviewStore.getCounts().then(() => {
   state.loading = false;
@@ -36,7 +41,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <RainbowTitle title="Dashboard" />
+  <RainbowNav :nav="nav" />
   <Loader v-if="state.loading" />
   <div v-else class="content-flex row">
     <DashboardCard v-for="count in overviewStore.counts"

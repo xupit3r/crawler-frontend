@@ -1,7 +1,15 @@
 <script setup>
-import RainbowTitle from '@/components/RainbowTitle.vue';
+import RainbowNav from '@/components/RainbowNav.vue';
+
+const nav = [{
+  title: 'Dashboard',
+  to: 'dashboard'
+}, {
+  title: 'Queue',
+  to: 'queue'
+}];
 </script>
 
 <template>
-  <RainbowTitle title="Queue" />
+  <RainbowNav :nav="nav" />
 </template>

@@ -1,6 +1,6 @@
 <script setup>
 import { reactive, computed } from 'vue';
-import RainbowTitle from '@/components/RainbowTitle.vue';
+import RainbowNav from '@/components/RainbowNav.vue';
 import PageCard from '@/components/PageCard.vue';
 import { usePagesStore } from '@/stores/pages';
 import Loader from '../components/Loader.vue';
@@ -11,6 +11,14 @@ const state = reactive({
   loading: true,
   show: 100
 });
+
+const nav = [{
+  title: 'Dashboard',
+  to: 'dashboard'
+}, {
+  title: 'Pages',
+  to: 'pages'
+}];
 
 const shownPages = computed(() => {
   return pagesStore.pages.slice(0, state.show);
@@ -24,7 +32,7 @@ pagesStore.getPages().finally(() => state.loading = false);
 </script>
 
 <template>
-  <RainbowTitle title="Pages" />
+  <RainbowNav :nav="nav" />
   <Loader v-if="state.loading" />
 
   <div v-if="!state.loading " class="content-flex row row-wrap">
