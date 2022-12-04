@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  width: 25%;
+  width: calc(25% - 4rem - 1rem);
   flex-direction: column;
   padding: 2rem;
   background-color: $less_dark_color;
@@ -31,7 +31,7 @@
 }
 
 
-.dashboardCard {  
+.dashboardCard {
   &-title {
     font-family: $title_font;
     font-size: 1.25rem;
@@ -81,5 +81,5 @@
 
 .queueCard {
   padding: 1rem;
-  width: 100%;
+  width: calc(100% - 2rem);
 }
