@@ -15,7 +15,7 @@ const props = defineProps({
     <h2>Up Next</h2>
     <div class="content content-flex column">
       <QueueCard v-for="item in items" 
-                :key="`${item.url}`" 
+                :key="`${item._id}`" 
                 :item="item" />
     </div>
   </div>
