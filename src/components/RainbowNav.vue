@@ -7,7 +7,7 @@ const props = defineProps({
 });
 
 const currentColor = '#F8F988';
-const others = '#BCEAD5';
+const others = '#C0EEE4';
 
 const links = props.nav.map((item, idx, arr) => ({
   ...item,
