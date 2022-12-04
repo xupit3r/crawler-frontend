@@ -47,7 +47,7 @@ const actions = {
       
       this.upNext = upNext;
 
-      return upNext;
+      return this.upNext;
     } catch (err) {
       return err;
     }

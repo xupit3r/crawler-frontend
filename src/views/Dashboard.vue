@@ -10,8 +10,9 @@ const overviewStore = useOverviewStore();
 
 const state = reactive({
   loading: true,
-  poller: {
-    timeout: null,
+  pollers: {
+    counts: null,
+    upNext: null,
     stop: false
   }
 });
@@ -27,23 +28,30 @@ Promise.all([
 ]).finally(() => {
   state.loading = false;
 
-  const refresher = () => {
+  const countRefresher = () => {
     if (!state.stop) {
-      state.poller = setTimeout(() => {
-        Promise.all([
-          overviewStore.getUpNext(),
-          overviewStore.getCounts()
-        ]).finally(refresher);
+      state.pollers.counts = setTimeout(() => {
+        overviewStore.getCounts().finally(countRefresher);
       }, 500);
     }
   };
 
-  refresher();
+  const nextUpRefresher = () => {
+    if (!state.stop) {
+      state.pollers.nextUp = setTimeout(() => {
+        overviewStore.getUpNext().finally(nextUpRefresher);
+      }, 50);
+    }
+  };
+
+  countRefresher();
+  nextUpRefresher();
 });
 
 onUnmounted(() => {
   state.stop = true;
-  clearTimeout(state.poller);
+  clearTimeout(state.pollers.counts);
+  clearTimeout(state.pollers.upNext);
 });
 
 </script>

@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from '@vue/reactivity';
 import { reactive } from 'vue';
 
 const props = defineProps({
@@ -7,14 +8,10 @@ const props = defineProps({
     default: () => ({})
   }
 });
-
-const classes = reactive({
-  processing: props.item.processing
-});
 </script>
 
 <template>
-  <div class="card readOnly queueCard" :class="classes">
+  <div class="card readOnly queueCard" :class="{ processing: item.processing }">
     <span class="queueCard-url">{{item.url}}</span>
     <span class="queueCard-processing"></span>
   </div>
