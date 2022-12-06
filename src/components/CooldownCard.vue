@@ -18,6 +18,6 @@ const relativeTime = computed(() => {
 <template>
   <div class="card readOnly cooldownCard">
     <span class="cooldownCard-host">{{item.hostname}}</span>
-    <span class="cooldownCard-date">{{relativeTime}}</span>
+    <span class="cooldownCard-date"><label>expires</label> {{relativeTime}}</span>
   </div>
 </template>

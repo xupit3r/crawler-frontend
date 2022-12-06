@@ -132,6 +132,13 @@
   width: calc(100% - 2rem);
   flex-direction: row;
   justify-content: space-between;
+
+  &-date {
+    & > label {
+      color: $subtle_color;
+      font-size: .75rem;
+    }
+  }
 }
 
 @keyframes rotate {
