@@ -3,6 +3,7 @@ import { onUnmounted, reactive } from 'vue';
 import { useOverviewStore } from '@/stores/overview';
 import DashboardCounts from '@/components/DashboardCounts.vue';
 import DashboardUpNext from '@/components/DashboardUpNext.vue';
+import DashboardCooldown from '@/components/DashboardCooldown.vue';
 import Loader from '@/components/Loader.vue';
 import RainbowNav from '@/components/RainbowNav.vue';
 
@@ -13,6 +14,7 @@ const state = reactive({
   pollers: {
     counts: null,
     upNext: null,
+    cooldown: null,
     stop: false
   }
 });
@@ -24,7 +26,8 @@ const nav = [{
 
 Promise.all([
   overviewStore.getUpNext(),
-  overviewStore.getCounts()
+  overviewStore.getCounts(),
+  overviewStore.getCooldown()
 ]).finally(() => {
   state.loading = false;
 
@@ -44,14 +47,24 @@ Promise.all([
     }
   };
 
+  const cooldownRefresher = () => {
+    if (!state.stop) {
+      state.pollers.cooldown = setTimeout(() => {
+        overviewStore.getCooldown().finally(cooldownRefresher);
+      }, 200);
+    }
+  };
+
   countRefresher();
   nextUpRefresher();
+  cooldownRefresher();
 });
 
 onUnmounted(() => {
   state.stop = true;
   clearTimeout(state.pollers.counts);
   clearTimeout(state.pollers.upNext);
+  clearTimeout(state.pollers.cooldown);
 });
 
 </script>
@@ -62,5 +75,6 @@ onUnmounted(() => {
   <div v-else>
     <DashboardCounts :counts="overviewStore.counts" />
     <DashboardUpNext :items="overviewStore.upNext" />
+    <DashboardCooldown :items="overviewStore.cooldown" />
   </div>
 </template>

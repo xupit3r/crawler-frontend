@@ -18,7 +18,8 @@ const countToLink = (name) => {
 
 const state = () => ({
   counts: [],
-  upNext: []
+  upNext: [],
+
 });
 
 const actions = {
@@ -48,6 +49,18 @@ const actions = {
       this.upNext = upNext;
 
       return this.upNext;
+    } catch (err) {
+      return err;
+    }
+  },
+  async getCooldown () {
+    try {
+      const resp = await fetch('/api/cooldown');
+      const cooldown = await resp.json();
+      
+      this.cooldown = cooldown;
+
+      return this.cooldown;
     } catch (err) {
       return err;
     }

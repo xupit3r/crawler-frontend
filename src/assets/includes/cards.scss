@@ -127,6 +127,13 @@
   }
 }
 
+.cooldownCard {
+  padding: 1rem;
+  width: calc(100% - 2rem);
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @keyframes rotate {
   0% {
     transform: translate(-50%, -50%) rotateZ(0deg);
