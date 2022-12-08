@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { useSocket } from '@/utils/socket';
 
 import App from '@/App.vue';
 import router from '@/router';
@@ -10,5 +11,7 @@ const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
+
+useSocket();
 
 app.mount('#app');
