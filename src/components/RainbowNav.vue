@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from '@vue/reactivity';
+
 const props = defineProps({
   nav: {
     type: Array,
@@ -9,11 +11,13 @@ const props = defineProps({
 const currentColor = '#F8F988';
 const others = '#C0EEE4';
 
-const links = props.nav.map((item, idx, arr) => ({
-  ...item,
-  key: `${item.to}-${idx}`,
-  color: idx === arr.length - 1 ? currentColor : others
-}));
+const links = computed(() => {
+  return props.nav.map((item, idx, arr) => ({
+    ...item,
+    key: `${item.to}-${idx}`,
+    color: idx === arr.length - 1 ? currentColor : others
+  }));
+});
 </script>
 
 <template>
@@ -22,9 +26,12 @@ const links = props.nav.map((item, idx, arr) => ({
       <li v-for="link in links" 
           :key="link.key" 
           :style="{ color: link.color }">
-          <router-link :to="{ name: link.to }">
+          <router-link v-if="link.to" :to="{ name: link.to }">
             {{link.title}}
           </router-link>
+          <span v-else>
+            {{link.title}}
+          </span>
       </li>
     </ul>
   </nav>

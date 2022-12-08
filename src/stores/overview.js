@@ -3,8 +3,6 @@ import { defineStore } from 'pinia';
 const countToLink = (name) => {
   if (name === 'pages') {
     return 'pages';
-  } else if (name === 'links') {
-    return 'links';
   } else if (name === 'queue') {
     return 'queue';
   } else if (name === 'cooldown') {

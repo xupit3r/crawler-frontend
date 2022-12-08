@@ -17,6 +17,16 @@ const actions = {
     } catch (err) {
       return err;
     }
+  },
+  async getPage (pageId) {
+    try {
+      const resp = await fetch(`/api/pages/byid/${pageId}`);
+      const page = await resp.json();
+
+      return page;
+    } catch (err) {
+      return err;
+    }
   }
 };
 
