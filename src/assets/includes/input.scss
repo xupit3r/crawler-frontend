@@ -1,0 +1,37 @@
+.input-field {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+
+  & > .label {
+    font-family: $title_font;
+    font-size: 1.5rem;
+    line-height: 4rem;
+    height: 4rem;
+    padding: 0 1rem;
+  }
+
+  & > input {
+    font-size: 1.5rem;
+    font-family: $data_font;
+    line-height: 3rem;
+    padding: .25rem;
+    background-color: $spash_color;
+    color: $less_dark_color;
+    border-width: 2px;
+    border-style: inset;
+    border-color: -internal-light-dark(
+      $blah_color, 
+      $blah_color
+    );
+    border-radius: 3px;
+    width: 100%;
+    margin: 0;
+
+    &:focus {
+      outline: none !important;
+      border: 2px solid $flash_color;
+    }
+  }
+}
