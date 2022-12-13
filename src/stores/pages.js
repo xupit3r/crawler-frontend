@@ -2,7 +2,11 @@ import { defineStore } from 'pinia';
 
 
 const state = () => ({
-  pages: []
+  pages: [],
+  filter: {
+    processedText: false,
+    textSearch: ''
+  }
 });
 
 const actions = {
@@ -24,6 +28,16 @@ const actions = {
       const page = await resp.json();
 
       return page;
+    } catch (err) {
+      return err;
+    }
+  },
+  async getPageText (pageId) {
+    try {
+      const resp = await fetch(`/api/pages/text/${pageId}`);
+      const text = await resp.json();
+
+      return text;
     } catch (err) {
       return err;
     }

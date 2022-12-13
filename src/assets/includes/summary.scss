@@ -1,0 +1,22 @@
+.pageTextSummary {
+  .pageTextSummary-overall {
+    padding: 0;
+    margin: 0 0 2rem 0;
+
+    & > .scores {
+      display: flex;
+      flex-direction: row;
+
+      & > .score {
+        display: flex;
+        flex-direction: column;
+
+        .value {
+          text-align: center;
+          font-size: 1.5rem;
+          padding: 1rem 0;
+        }
+      }
+    }
+  }
+}

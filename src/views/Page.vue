@@ -2,9 +2,10 @@
 import { computed } from '@vue/reactivity';
 import { useRoute } from 'vue-router';
 import { usePagesStore } from '@/stores/pages';
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
 import RainbowNav from '@/components/RainbowNav.vue';
 import PageLinks from '../components/PageLinks.vue';
+import PageTextSummary from '../components/PageTextSummary.vue';
 
 const route = useRoute();
 const pagesStore = usePagesStore();
@@ -16,7 +17,9 @@ const state = reactive({
   url: '',
   host: '',
   html: '',
-  links: []
+  links: [],
+  text: false,
+  pageText: []
 });
 
 const nav = computed(() => {
@@ -46,12 +49,18 @@ pagesStore.getPage(pageId).then(page => {
   state.url = page.url;
   state.host = page.host;
   state.html = page.data;
+  state.text = page.text || false;
   state.links = page.links;
+});
+
+pagesStore.getPageText(pageId).then(text => {
+  state.pageText = text;
 });
 
 </script>
 
 <template>
   <RainbowNav :nav="nav" />
+  <PageTextSummary v-if="state.text" :text="state.pageText" />
   <PageLinks :links="state.links" />
 </template>

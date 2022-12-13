@@ -147,6 +147,14 @@
   }
 }
 
+.textCard {
+  padding: 1rem;
+  width: 100%;
+  font-size: 1rem;
+  flex-direction: row;
+  column-gap: 2rem;
+}
+
 @keyframes rotate {
   0% {
     transform: translate(-50%, -50%) rotateZ(0deg);
