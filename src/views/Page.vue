@@ -4,8 +4,8 @@ import { useRoute } from 'vue-router';
 import { usePagesStore } from '@/stores/pages';
 import { reactive } from 'vue';
 import RainbowNav from '@/components/RainbowNav.vue';
-import PageLinks from '../components/PageLinks.vue';
-import PageTextSummary from '../components/PageTextSummary.vue';
+import PageLinks from '@/components/PageLinks.vue';
+import PageTextSummary from '@/components/PageTextSummary.vue';
 
 const route = useRoute();
 const pagesStore = usePagesStore();

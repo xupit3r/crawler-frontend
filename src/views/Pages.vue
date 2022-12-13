@@ -4,13 +4,13 @@ import { debounce } from 'debounce';
 import RainbowNav from '@/components/RainbowNav.vue';
 import PageCard from '@/components/PageCard.vue';
 import { usePagesStore } from '@/stores/pages';
-import Loader from '../components/Loader.vue';
+import Loader from '@/components/Loader.vue';
 
 const pagesStore = usePagesStore();
 
 const state = reactive({
   loading: true,
-  show: 100
+  show: 50
 });
 
 const nav = [{
@@ -45,7 +45,7 @@ const shownPages = computed(() => {
 });
 
 function showMore () {
-  state.show = state.show + 100;
+  state.show = state.show + 50;
 }
 
 const doFilter = debounce((ev) => {
