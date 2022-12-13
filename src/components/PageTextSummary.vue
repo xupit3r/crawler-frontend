@@ -17,7 +17,7 @@ const state = reactive({
 });
 
 const relevantText = computed(() => {
-  return props.text.filter(text => isRelevant(text.parent)).map(text => {
+  return props.text.filter(text => isRelevant(text.parent, text.text)).map(text => {
     return {
       ...text,
       emoji: assignEmoji(text.sentiment)
@@ -71,7 +71,6 @@ function collapse () {
         <div v-for="item in textToShow" class="textCard card">
           <div class="sentiment">{{item.emoji}}</div>
           <div class="text">{{item.text}}</div>
-          <div class="tag">{{item.parent}}</div>
         </div>
 
 
