@@ -4,9 +4,9 @@ import { useText } from '@/composables/text';
 import { reactive } from 'vue';
 
 const props = defineProps({
-  text: {
-    type: Array,
-    default: () => []
+  pageText: {
+    type: Object,
+    default: () => ({})
   }
 });
 
@@ -17,13 +17,15 @@ const state = reactive({
 });
 
 const relevantText = computed(() => {
-  return props.text.filter(text => isRelevant(text.parent, text.text)).map(text => {
+  return (props.pageText.text || []).filter(text => isRelevant(text.parent, text.text)).map(text => {
     return {
       ...text,
       emoji: assignEmoji(text.sentiment)
     }
   });
 });
+
+const summary = computed(() => (props.pageText || {}).summary || '');
 
 const averageSentiment = computed(() => {
   const total = relevantText.value.reduce((sum, text) => {
@@ -60,6 +62,9 @@ function collapse () {
     <h2>Text Summary</h2>
     <div class="pageTextSummary">
       <div class="pageTextSummary-overall">
+        <div class="summary">
+          {{ summary }}
+        </div>
         <div class="scores">
           <div class="score">
             <span class="label">sentiment</span>

@@ -53,14 +53,14 @@ pagesStore.getPage(pageId).then(page => {
   state.links = page.links;
 });
 
-pagesStore.getPageText(pageId).then(text => {
-  state.pageText = text;
+pagesStore.getPageText(pageId).then(pageText => {
+  state.pageText = pageText;
 });
 
 </script>
 
 <template>
   <RainbowNav :nav="nav" />
-  <PageTextSummary v-if="state.text" :text="state.pageText" />
+  <PageTextSummary v-if="state.text" :pageText="state.pageText" />
   <PageLinks :links="state.links" />
 </template>

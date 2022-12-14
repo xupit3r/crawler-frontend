@@ -81,7 +81,7 @@ if (!pagesStore.pages.length) {
         <input type="checkbox" 
                name="preprocessedText" 
                class="checkbox-search" 
-               :checked="pagesStore.filter.textSearch"
+               :checked="pagesStore.filter.processedText"
                @click.stop="toggleProcessedText" />
         <span>Includes Text Processing</span>
       </label>
