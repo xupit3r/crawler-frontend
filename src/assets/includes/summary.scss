@@ -24,4 +24,13 @@
       }
     }
   }
+
+  .pageTextSummary-cards {
+    row-gap: .75rem;
+    column-gap: .75rem;
+
+    .content-actions {
+      width: 100%;
+    }
+  }
 }
