@@ -19,6 +19,8 @@ const state = reactive({
   html: '',
   links: [],
   text: false,
+  sentiment: false,
+  summarized: false,
   pageText: []
 });
 
@@ -44,12 +46,24 @@ const nav = computed(() => {
   }]
 });
 
+const showTextSummary = computed(() => {
+  return (
+    state.pageText.length && 
+    (
+      state.sentiment || 
+      state.summarized
+    )
+  );
+});
+
 pagesStore.getPage(pageId).then(page => {
   state._id = page._id;
   state.url = page.url;
   state.host = page.host;
   state.html = page.data;
   state.text = page.text || false;
+  state.sentiment = page.sentiment || false;
+  state.summarized = page.summarized || false;
   state.links = page.links;
 });
 
@@ -60,7 +74,8 @@ pagesStore.getPageText(pageId).then(pageText => {
 </script>
 
 <template>
-  <RainbowNav :nav="nav" />
-  <PageTextSummary :pageText="state.pageText" />
+  <RainbowNav :nav="nav" :visit="state.url" />
+  <PageTextSummary v-if="showTextSummary" 
+                   :pageText="state.pageText" />
   <PageLinks :links="state.links" />
 </template>

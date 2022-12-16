@@ -11,9 +11,14 @@ const state = () => ({
 });
 
 const actions = {
-  async getPages () {
+  async getPages (limit = -1) {
+    const url = (limit > -1
+      ? `/api/pages?limit=${limit}`
+      : '/api/pages'
+    );
+    
     try {
-      const resp = await fetch('/api/pages/list/50');
+      const resp = await fetch(url);
       const pages = await resp.json();
 
       this.pages = pages;

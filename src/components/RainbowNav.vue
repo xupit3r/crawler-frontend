@@ -5,6 +5,10 @@ const props = defineProps({
   nav: {
     type: Array,
     default: () => []
+  },
+  visit: {
+    type: String,
+    default: ''
   }
 });
 
@@ -34,5 +38,8 @@ const links = computed(() => {
           </span>
       </li>
     </ul>
+    <div v-if="visit.length" class="link-visit">
+      <a :href="visit" target="_blank">Visit Site</a>
+    </div>
   </nav>
 </template>

@@ -1,4 +1,7 @@
 nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   font-family: $title_font;
   font-size: 2rem;
   margin: 1rem 0;
@@ -28,6 +31,17 @@ nav {
         &:hover {
           color: $subtle_color !important;
         }
+      }
+    }
+  }
+
+  .link-visit {
+    & > a {
+      color: $base_color;
+      text-decoration: none;
+
+      &:hover {
+        color: $subtle_color !important;
       }
     }
   }
