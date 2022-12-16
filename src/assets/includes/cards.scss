@@ -46,10 +46,27 @@
 .pageCard {
   width: calc(33.33% - 4rem - 1rem);
   row-gap: .25rem;
-  
+
   &-url {
     font-size: 1rem;
     font-weight: bolder;
+  }
+
+  &-text {
+    display: flex;
+    flex-direction: row;
+    column-gap: .5rem;
+    margin: 1.5rem 0 0 0;
+    
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+      stroke: $base_color;
+    }
+  }
+
+  &:not(.readOnly):hover svg {
+    stroke: $backgound_color;
   }
 
   &-status:before {

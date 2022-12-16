@@ -13,7 +13,7 @@ const state = () => ({
 const actions = {
   async getPages () {
     try {
-      const resp = await fetch('/api/pages');
+      const resp = await fetch('/api/pages/list/50');
       const pages = await resp.json();
 
       this.pages = pages;
