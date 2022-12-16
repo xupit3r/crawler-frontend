@@ -79,7 +79,7 @@ function collapse () {
         </div>
 
 
-        <div class="content-centered content-actions">
+        <div v-if="textToShow.length > 5" class="content-centered content-actions">
           <button v-if="!state.expanded" @click="expand">All Text</button>
           <button v-else @click="collapse">Some Text</button>
       </div>

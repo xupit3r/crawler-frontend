@@ -4,7 +4,8 @@ import { defineStore } from 'pinia';
 const state = () => ({
   pages: [],
   filter: {
-    processedText: false,
+    textSummary: false,
+    textSentiment: false,
     textSearch: ''
   }
 });

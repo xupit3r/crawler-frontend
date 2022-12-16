@@ -10,7 +10,9 @@ const pagesStore = usePagesStore();
 
 const state = reactive({
   loading: true,
-  show: 50
+  filtering: false,
+  show: 50,
+  shownPages: []
 });
 
 const nav = [{
@@ -21,44 +23,72 @@ const nav = [{
   to: 'pages'
 }];
 
-const shownPages = computed(() => {
-  return pagesStore.pages.filter(page => {
-    const filterResult = {
-      processedText: false,
-      textSearch: false
-    };
+const filterPages = () => {
+  state.filtering = true;
 
-    if (pagesStore.filter.textSearch.length > 2) {
-      filterResult.textSearch = page.url.indexOf(pagesStore.filter.textSearch) > -1;
-    } else {
-      filterResult.textSearch = true;
-    }
-
-    if (pagesStore.filter.processedText) {
-      filterResult.processedText = page.text || false;
-    } else {
-      filterResult.processedText = true;
-    }
-
-    return filterResult.processedText && filterResult.textSearch;
-  }).slice(0, state.show);
-});
+  // give the browser a chance to render the loading 
+  // indicator
+  setTimeout(() => {
+    const filtered = pagesStore.pages.filter(page => {
+      const filterResult = {
+        textSummary: true,
+        textSentiment: true,
+        textSearch: false
+      };
+  
+      if (pagesStore.filter.textSearch.length > 2) {
+        filterResult.textSearch = page.url.indexOf(pagesStore.filter.textSearch) > -1;
+      } else {
+        filterResult.textSearch = true;
+      }
+  
+      if (pagesStore.filter.textSummary) {
+        filterResult.textSummary = page.summarized || false;
+      }
+  
+      if (pagesStore.filter.textSentiment) {
+        filterResult.textSentiment = page.sentiment || false;
+      }
+  
+      return (
+        filterResult.textSummary && 
+        filterResult.textSentiment && 
+        filterResult.textSearch
+      );
+    }).slice(0, state.show);
+  
+    state.shownPages = filtered;
+    state.filtering = false;
+  }, 0);
+};
 
 function showMore () {
   state.show = state.show + 50;
+  filterPages();
 }
 
 const doFilter = debounce((ev) => {
   pagesStore.filter.textSearch = ev.target.value;
+  filterPages();
 }, 250);
 
-const toggleProcessedText = () => {
-  pagesStore.filter.processedText = !pagesStore.filter.processedText;
+const toggleTextSummary = () => {
+  pagesStore.filter.textSummary = !pagesStore.filter.textSummary;
+  filterPages();
+};
+
+const toggleTextSentiment = () => {
+  pagesStore.filter.textSentiment = !pagesStore.filter.textSentiment;
+  filterPages();
 };
 
 if (!pagesStore.pages.length) {
-  pagesStore.getPages().finally(() => state.loading = false);
+  pagesStore.getPages().finally(() => {
+    filterPages();
+    state.loading = false;
+  });
 } else {
+  filterPages();
   state.loading = false;
 }
 </script>
@@ -66,31 +96,50 @@ if (!pagesStore.pages.length) {
 <template>
   <RainbowNav :nav="nav" />
   <Loader v-if="state.loading" />
-  <div v-if="!state.loading" class="content-actions actions">
+  <div v-if="!state.loading" class="content-actions actions search">
     <div class="input-field">
       <label class="label">Filter</label>
       <input type="text" 
              name="search" 
-             class="input-search" 
+             class="input-search"
+             :disabled="state.filtering" 
              :value="pagesStore.filter.textSearch" 
              @input.stop="doFilter" />
     </div>
-
-    <div class="input-checkbox">
-      <label class="label">
-        <input type="checkbox" 
-               name="preprocessedText" 
-               class="checkbox-search" 
-               :checked="pagesStore.filter.processedText"
-               @click.stop="toggleProcessedText" />
-        <span>Includes Text Processing</span>
-      </label>
+    
+    <div class="search-checkboxes">
+      <div class="input-checkbox">
+        <label class="label">
+          <input type="checkbox" 
+                 name="textSummary" 
+                 class="checkbox-search"
+                 :disabled="state.filtering"
+                 :checked="pagesStore.filter.textSummary"
+                 @click.stop="toggleTextSummary" />
+          <span>Includes Text Summary</span>
+        </label>
+      </div>
+  
+      <div class="input-checkbox">
+        <label class="label">
+          <input type="checkbox" 
+                 name="textSentiment" 
+                 class="checkbox-search"
+                 :disabled="state.filtering"
+                 :checked="pagesStore.filter.textSentiment"
+                 @click.stop="toggleTextSentiment" />
+          <span>Includes Text Sentiment</span>
+        </label>
+      </div>
     </div>
   </div>
-  <div v-if="!state.loading " class="content-flex row row-wrap">
-    <PageCard v-for="page in shownPages" :page="page" />
+  <div v-if="!state.loading && !state.filtering" class="content-flex row row-wrap">
+    <PageCard v-for="page in state.shownPages" :page="page" />
   </div>
-  <div v-if="!state.loading" class="content-centered content-actions">
+  <div v-if="!state.loading && !state.filtering" class="content-centered content-actions">
     <button class="" @click="showMore">More</button>
+  </div>
+  <div v-if="state.filtering" class="content-centered content-actions">
+    <Loader />
   </div>
 </template>

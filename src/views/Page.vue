@@ -61,6 +61,6 @@ pagesStore.getPageText(pageId).then(pageText => {
 
 <template>
   <RainbowNav :nav="nav" />
-  <PageTextSummary v-if="state.text" :pageText="state.pageText" />
+  <PageTextSummary :pageText="state.pageText" />
   <PageLinks :links="state.links" />
 </template>
