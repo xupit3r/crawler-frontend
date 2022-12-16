@@ -21,7 +21,7 @@ const state = reactive({
   text: false,
   sentiment: false,
   summarized: false,
-  pageText: []
+  pageText: {}
 });
 
 const nav = computed(() => {
@@ -48,7 +48,8 @@ const nav = computed(() => {
 
 const showTextSummary = computed(() => {
   return (
-    state.pageText.length && 
+    state.pageText.text &&
+    state.pageText.text.length && 
     (
       state.sentiment || 
       state.summarized
