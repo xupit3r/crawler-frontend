@@ -99,7 +99,7 @@ Promise.all([
              :disabled="filterState.isFiltering" 
              :value="pagesStore.filter.textSearch"
              @input.stop="collectText" />
-      <button v-if="showClear" @click="clearSearch">Clear</button>
+      <button v-if="showClear" class="clear-button" @click="clearSearch">&#215;</button>
       <button @click="doSearch" :disabled="filterState.isFiltering">Query</button>
     </div>
   </div>
