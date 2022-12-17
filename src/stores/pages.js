@@ -3,8 +3,6 @@ import { defineStore } from 'pinia';
 
 const state = () => ({
   filter: {
-    textSummary: false,
-    textSentiment: false,
     textSearch: ''
   }
 });
