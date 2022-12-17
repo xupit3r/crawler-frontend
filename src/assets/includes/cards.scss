@@ -44,10 +44,13 @@
 }
 
 .pageCard {
-  width: calc(33.33% - 4rem - 1rem);
-  row-gap: .25rem;
+  flex-direction: row;
+  width: calc(100% - 4rem - 1rem);
 
   &-url {
+    width: 100%;
+    overflow: hidden;
+    margin: 0 1rem 0 0;
     font-size: 1rem;
     font-weight: bolder;
   }
@@ -56,7 +59,6 @@
     display: flex;
     flex-direction: row;
     column-gap: .5rem;
-    margin: 1.5rem 0 0 0;
     
     svg {
       height: 1.5rem;
