@@ -1,4 +1,10 @@
 .search {
+  .search-field {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+  }
+  
   .search-checkboxes {
     display: flex;
     flex-direction: row;

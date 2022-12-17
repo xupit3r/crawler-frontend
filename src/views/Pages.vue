@@ -1,6 +1,5 @@
 <script setup>
-import { reactive, toRef } from 'vue';
-import { debounce } from 'debounce';
+import { reactive, computed } from 'vue';
 import RainbowNav from '@/components/RainbowNav.vue';
 import PageCard from '@/components/PageCard.vue';
 import { usePagesStore } from '@/stores/pages';
@@ -9,9 +8,15 @@ import Loader from '@/components/Loader.vue';
 
 const pagesStore = usePagesStore();
 
+const staticState = {
+  pages: [],
+  texts: []
+};
+
 const state = reactive({
   loading: true,
-  limit: 100
+  limit: 50,
+  searched: false
 });
 
 const nav = [{
@@ -22,40 +27,69 @@ const nav = [{
   to: 'pages'
 }];
 
-const filterPredicate = (page) => {
-  const filterResult = {
-    textSummary: true,
-    textSentiment: true,
-    textSearch: false
-  };
+const filterResults = () => {
+  let pageIds = {};
 
-  if (pagesStore.filter.textSearch.length > 2) {
-    filterResult.textSearch = page.url.indexOf(pagesStore.filter.textSearch) > -1;
-  } else {
-    filterResult.textSearch = true;
+  if (state.searched) {
+    const term = pagesStore.filter.textSearch.toLowerCase();
+    
+    pageIds = staticState.texts.filter(doc => {
+      return doc.text.indexOf(term) > -1;
+    }).map(doc => doc.page).reduce((h, pageId) => {
+      return h[pageId] = true, h;
+    }, {});
   }
 
-  if (pagesStore.filter.textSummary) {
-    filterResult.textSummary = page.summarized || false;
-  }
+  return staticState.pages.filter((page) => {
+    const filterResult = {
+      textSummary: true,
+      textSentiment: true,
+      textSearch: true
+    };
 
-  if (pagesStore.filter.textSentiment) {
-    filterResult.textSentiment = page.sentiment || false;
-  }
-
-  return (
-    filterResult.textSummary && 
-    filterResult.textSentiment && 
-    filterResult.textSearch
-  );
+    if (state.searched) {
+      filterResult.textSearch = !!pageIds[page._id];
+    }
+  
+    if (pagesStore.filter.textSummary) {
+      filterResult.textSummary = page.summarized || false;
+    }
+  
+    if (pagesStore.filter.textSentiment) {
+      filterResult.textSentiment = page.sentiment || false;
+    }
+  
+    return (
+      filterResult.textSummary && 
+      filterResult.textSentiment &&
+      filterResult.textSearch
+    );
+  });
 }
 
-const { filterState, doFilter } = useFilter(toRef(pagesStore, 'pages'), filterPredicate, state.limit);
+const { filterState, doFilter } = useFilter(
+  filterResults, 
+  state.limit
+);
 
-const doTextFilter = debounce((ev) => {
-  pagesStore.filter.textSearch = ev.target.value;
+const showClear = computed(() => {
+  return state.searched && pagesStore.filter.textSearch.length > 0;
+});
+
+const clearSearch = () => {
+  pagesStore.filter.textSearch = '';
+  state.searched = false;
   doFilter();
-}, 250);
+}
+
+const doSearch = () => {
+  doFilter();
+  state.searched = true;
+}
+
+const collectText = (ev) => {
+  pagesStore.filter.textSearch = ev.target.value;
+}
 
 const toggleTextSummary = () => {
   pagesStore.filter.textSummary = !pagesStore.filter.textSummary;
@@ -67,29 +101,38 @@ const toggleTextSentiment = () => {
   doFilter();
 };
 
-if (!pagesStore.pages.length) {
-  pagesStore.getPages().finally(() => {
-    doFilter();
-    state.loading = false;
+Promise.all([
+  pagesStore.getPages(),
+  pagesStore.getPageTexts()
+]).then(([pages, texts]) => {
+  staticState.pages = pages;
+  staticState.texts = texts.map(doc => {
+    return {
+      page: doc.page,
+      text: doc.text.map(pageText => pageText.text.toLowerCase()).join(' ')
+    };
   });
-} else {
+
   doFilter();
+  state.searched = pagesStore.filter.textSearch.length > 0;
   state.loading = false;
-}
+});
 </script>
 
 <template>
   <RainbowNav :nav="nav" />
   <Loader v-if="state.loading" />
   <div v-if="!state.loading" class="content-actions actions search">
-    <div class="input-field">
-      <label class="label">Filter</label>
+    <div class="input-field search-field">
+      <label class="label">Search</label>
       <input type="text" 
              name="search" 
              class="input-search"
              :disabled="filterState.isFiltering" 
-             :value="pagesStore.filter.textSearch" 
-             @input.stop="doTextFilter" />
+             :value="pagesStore.filter.textSearch"
+             @input.stop="collectText" />
+      <button v-if="showClear" @click="clearSearch">Clear</button>
+      <button @click="doSearch" :disabled="filterState.isFiltering">Query</button>
     </div>
     
     <div class="search-checkboxes">
