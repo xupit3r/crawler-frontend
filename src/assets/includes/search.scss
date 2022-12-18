@@ -7,12 +7,15 @@
 
     .clear-button {
       position: absolute;
-      right: 9rem;
-      top: .75rem;
+      right: 1rem;
+      top: 1rem;
       font-size: 2rem;
-      border-radius: 2.5rem;
+      line-height: 2.25rem;
+      border-radius: .75rem;
       background-color: $backgound_color;
-      padding: 0 1rem;
+      padding: 0;
+      width: 2rem;
+      height: 2rem;
       color: $base_color;
 
       &:hover {
