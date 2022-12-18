@@ -45,10 +45,11 @@
 
 .pageCard {
   flex-direction: row;
+  flex-wrap: wrap;
   width: calc(100% - 4rem - 1rem);
 
   &-url {
-    width: 100%;
+    width: calc(90% - 1rem);
     overflow: hidden;
     margin: 0 1rem 0 0;
     font-size: 1rem;
@@ -56,14 +57,30 @@
   }
 
   &-text {
+    width: 10%;
     display: flex;
     flex-direction: row;
+    justify-content: right;
     column-gap: .5rem;
     
     svg {
       height: 1.5rem;
       width: 1.5rem;
       stroke: $base_color;
+    }
+  }
+
+  &-tags {
+    width: 100%;
+    margin: 1rem 0 0 0;
+
+    .tag {
+      font-size: .75rem;
+      background-color: $blah_color;
+      color: $backgound_color;
+      padding: 0.4rem;
+      border-radius: .25rem;
+      margin-right: .5rem;
     }
   }
 

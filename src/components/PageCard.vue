@@ -31,5 +31,8 @@ const loadPage = () => {
       <IconSummary v-if="page.summarized" />
       <IconSentiment v-if="page.sentiment" />
     </div>
+    <div class="pageCard-tags">
+      <span v-for="tag in page.tags" class="tag">{{tag}}</span>
+    </div>
   </div>
 </template>
