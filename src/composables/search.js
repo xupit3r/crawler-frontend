@@ -19,6 +19,15 @@ const newlines = /(\r\n|\n|\r)/gm;
              .trim();
 }
 
+const ngram = (n, tokens) => {
+  let grams = [];
+  for (let i = 0; i < tokens.length; i++) {
+    grams.push(tokens.slice(i, i + n));
+  }
+
+  return grams;
+}
+
 export const useSearch = () => {
   const staticStore = useStaticStore();
 
@@ -29,9 +38,10 @@ export const useSearch = () => {
   const search = (term) => {
     const tokens = tokenize(cleanText(term.toLowerCase()));
     const noStops = removeStopwords(tokens);
+    const ngrams = ngram(3, noStops).map(n => n.join(' '));
 
     const matched = staticStore.state.tf.filter((doc) => {
-      return noStops.reduce((b, token) => {
+      return ngrams.reduce((b, token) => {
         return b || !!doc.tf[token];
       }, false);
     });
@@ -41,7 +51,7 @@ export const useSearch = () => {
     );
 
     return matched.map((doc) => {
-      const sum = noStops.map((token) => {
+      const sum = ngrams.map((token) => {
         return doc.tf[token] || 0;
       }).reduce((s, w) => s + w, 0);
 
