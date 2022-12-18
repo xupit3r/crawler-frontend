@@ -61,7 +61,7 @@ if (!staticStore.ready.tf) {
   socketSend({type: 'tf'});
 }
 
-if (staticStore.ready.tf) {
+if (staticStore.loaded.tf) {
   doSearch();
 }
 </script>
@@ -78,6 +78,10 @@ if (staticStore.ready.tf) {
              :value="pagesStore.filter.textSearch"
              @input.stop="triggerSearch" />
       <button v-if="showClear" class="clear-button" @click="clearSearch">&#215;</button>
+    </div>
+    <div v-if="!staticStore.loaded.tf" class="tf-loading">
+      <Loader ></Loader>
+      <p>term frequency is still loading (search will be limited)</p>
     </div>
   </div>
 

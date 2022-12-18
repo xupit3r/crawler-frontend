@@ -10,6 +10,11 @@ const ready = reactive({
   tf: false
 });
 
+const loaded = reactive({
+  pages: false,
+  tf: false
+});
+
 export const useStaticStore = () => {
   const addPage = (doc) => {
     state.pages[doc._id] = doc;
@@ -17,6 +22,10 @@ export const useStaticStore = () => {
     if (Object.keys(state.pages).length > 10000) {
       ready.pages = true;
     }
+  }
+
+  const pagesLoaded = () => {
+    loaded.pages = true;
   }
 
   const addTF = (doc) => {
@@ -27,10 +36,17 @@ export const useStaticStore = () => {
     }
   }
 
+  const tfLoaded = () => {
+    loaded.tf = true;
+  }
+
   return {
     state,
     addPage,
+    pagesLoaded,
     addTF,
-    ready
+    tfLoaded,
+    ready,
+    loaded
   };
 }

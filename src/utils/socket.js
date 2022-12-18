@@ -35,7 +35,11 @@ export const useSocket = () => {
       } else if (data.type === 'page') {
         staticStore.addPage(data.page);
       } else if (data.type === 'tf') {
-        staticStore.addTF(data.tf);
+        if (data.tf){ 
+          staticStore.addTF(data.tf);
+        } else if (data.done) {
+          staticStore.tfLoaded();
+        }
       }
     });
   }
