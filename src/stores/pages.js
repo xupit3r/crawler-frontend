@@ -4,6 +4,9 @@ import { defineStore } from 'pinia';
 const state = () => ({
   filter: {
     textSearch: ''
+  },
+  results: {
+    pages: []
   }
 });
 
@@ -47,6 +50,19 @@ const actions = {
     try {
       const resp = await fetch(`/api/pages/text/${pageId}`);
       const text = await resp.json();
+
+      return text;
+    } catch (err) {
+      return err;
+    }
+  },
+  async getPageResults (pageIds) {
+    try {
+      const json = JSON.stringify(pageIds);
+      const resp = await fetch(`/api/search/pages?ids=${json}`);
+      const pages = await resp.json();
+
+      this.results.pages = pages;
 
       return text;
     } catch (err) {
