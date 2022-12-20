@@ -5,6 +5,10 @@ import { reactive } from 'vue';
 import SentimentCard from './SentimentCard.vue';
 
 const props = defineProps({
+  summary: {
+    type: String,
+    default: ''
+  },
   pageText: {
     type: Object,
     default: () => ({})
@@ -25,8 +29,6 @@ const relevantText = computed(() => {
     }
   });
 });
-
-const summary = computed(() => (props.pageText || {}).summary || '');
 
 const averageSentiment = computed(() => {
   const total = relevantText.value.reduce((sum, text) => {

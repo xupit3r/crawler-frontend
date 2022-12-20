@@ -77,7 +77,7 @@ if (staticStore.loaded.tf) {
              class="input-search"
              :value="pagesStore.filter.textSearch"
              @input.stop="triggerSearch" />
-      <button v-if="showClear" class="clear-button" @click="clearSearch">&#215;</button>
+      <button v-show="showClear" class="clear-button" @click="clearSearch">&#215;</button>
     </div>
     <div v-if="!staticStore.loaded.tf" class="tf-loading">
       <Loader ></Loader>

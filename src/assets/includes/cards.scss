@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  width: calc(25% - 4rem - 1rem);
+  width: calc(25% - 4rem);
   flex-direction: column;
   padding: 2rem;
   background-color: $less_dark_color;
@@ -46,7 +46,7 @@
 .pageCard {
   flex-direction: row;
   flex-wrap: wrap;
-  width: calc(100% - 4rem - 1rem);
+  width: calc(100% - 4rem);
 
   &-url {
     width: calc(90% - 1rem);
@@ -68,6 +68,12 @@
       width: 1.5rem;
       stroke: $base_color;
     }
+  }
+
+  &-summary {
+    width: 100%;
+    margin: 1rem 0 0 0;
+    font-size: .9rem;
   }
 
   &-tags {

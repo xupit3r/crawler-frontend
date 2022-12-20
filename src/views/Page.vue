@@ -21,6 +21,7 @@ const state = reactive({
   text: false,
   sentiment: false,
   summarized: false,
+  summary: '',
   pageText: {}
 });
 
@@ -65,6 +66,7 @@ pagesStore.getPage(pageId).then(page => {
   state.text = page.text || false;
   state.sentiment = page.sentiment || false;
   state.summarized = page.summarized || false;
+  state.summary = page.summary || '';
   state.links = page.links;
 });
 
@@ -77,6 +79,7 @@ pagesStore.getPageText(pageId).then(pageText => {
 <template>
   <RainbowNav :nav="nav" :visit="state.url" />
   <PageTextSummary v-if="showTextSummary" 
+                   :summary="state.summary"
                    :pageText="state.pageText" />
   <PageLinks :links="state.links" />
 </template>
