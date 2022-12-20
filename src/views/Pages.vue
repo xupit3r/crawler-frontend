@@ -6,12 +6,10 @@ import PageCard from '@/components/PageCard.vue';
 import Loader from '@/components/Loader.vue';
 import { usePagesStore } from '@/stores/pages';
 import { useStaticStore } from '@/stores/static';
-import { useSocket } from '@/utils/socket';
 import { useSearch } from '@/composables/search';
 
 const pagesStore = usePagesStore();
 const staticStore = useStaticStore();
-const { socketSend } = useSocket();
 const { search } = useSearch();
 
 const state = reactive({
@@ -56,10 +54,6 @@ const triggerSearch = (ev) => {
 };
 
 const isLoading = computed(() => !staticStore.ready.tf);
-
-if (!staticStore.ready.tf) {
-  socketSend({type: 'tf'});
-}
 
 if (staticStore.loaded.tf) {
   doSearch();
