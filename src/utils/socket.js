@@ -9,7 +9,10 @@ const state = {
 export const useSocket = () => {
   const overviewStore = useOverviewStore();
   const staticStore = useStaticStore();
-  const SOCKET_URL = `ws://${location.hostname}:${location.port}/ws`;
+  const SOCKET_URL = (process.env.NODE_ENV === 'production'
+    ? `wss://${location.hostname}:${location.port}/ws`
+    : `ws://${location.hostname}:${location.port}/ws`
+  );
 
   const onMessage = ev => {
     const data = JSON.parse(ev.data);
