@@ -68,7 +68,7 @@ if (staticStore.loaded.tf) {
 
 <template>
   <RainbowNav :nav="nav" />
-  <Loader v-if="isLoading" />
+  <Loader v-if="isLoading"  message="loading page meta data" />
   <div v-if="!isLoading" class="content-actions actions search">
     <div class="input-field search-field">
       <label class="label">Search</label>
