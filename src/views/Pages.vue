@@ -3,19 +3,14 @@ import { reactive, computed } from 'vue';
 import debounce from 'debounce';
 import RainbowNav from '@/components/RainbowNav.vue';
 import PageCard from '@/components/PageCard.vue';
-import Loader from '@/components/Loader.vue';
 import { usePagesStore } from '@/stores/pages';
-import { useStaticStore } from '@/stores/static';
-import { useSearch } from '@/composables/search';
 
 const pagesStore = usePagesStore();
-const staticStore = useStaticStore();
-const { search } = useSearch();
 
 const state = reactive({
-  loading: true,
   limit: 50,
-  searched: false
+  searched: false,
+  filtering: false
 });
 
 const nav = [{
@@ -29,9 +24,14 @@ const showClear = computed(() => {
   return state.searched && pagesStore.filter.textSearch.length > 0;
 });
 
+const hasTerm = computed(() => {
+  return pagesStore.filter.textSearch.length > 0;
+});
+
 const clearSearch = () => {
   pagesStore.filter.textSearch = '';
   state.searched = false;
+  state.filtering = false;
   pagesStore.results.pages = [];
 }
 
@@ -39,11 +39,9 @@ const doSearch = debounce(() => {
   const term = pagesStore.filter.textSearch.toLowerCase();
   
   if (term.length > 0) {
-    const pageIds = search(term).slice(0, state.limit)
-                                .map((doc) => doc.id);
-
     state.searched = true;
-    pagesStore.getPageResults(pageIds)
+    state.filtering = true;
+    pagesStore.getPageResults(term)
               .then(() => state.filtering = false);
   }
 }, 100);
@@ -53,17 +51,14 @@ const triggerSearch = (ev) => {
   doSearch();
 };
 
-const isLoading = computed(() => !staticStore.ready.tf);
-
-if (staticStore.loaded.tf) {
-  doSearch();
+if (pagesStore.filter.textSearch.length > 0) {
+  state.searched = true;
 }
 </script>
 
 <template>
   <RainbowNav :nav="nav" />
-  <Loader v-if="isLoading"  message="loading page meta data" />
-  <div v-if="!isLoading" class="content-actions actions search">
+  <div class="content-actions actions search">
     <div class="input-field search-field">
       <label class="label">Search</label>
       <input type="text" 
@@ -73,13 +68,9 @@ if (staticStore.loaded.tf) {
              @input.stop="triggerSearch" />
       <button v-show="showClear" class="clear-button" @click="clearSearch">&#215;</button>
     </div>
-    <div v-if="!staticStore.loaded.tf" class="tf-loading">
-      <Loader ></Loader>
-      <p>term frequency is still loading (search will be limited)</p>
-    </div>
   </div>
 
-  <div class="content-flex row row-wrap">
+  <div v-if="!state.filtering && hasTerm" class="content-flex row row-wrap">
     <PageCard v-for="page in pagesStore.results.pages" :page="page" />
   </div>
 </template>

@@ -56,15 +56,14 @@ const actions = {
       return err;
     }
   },
-  async getPageResults (pageIds) {
+  async getPageResults (term) {
     try {
-      const json = JSON.stringify(pageIds);
-      const resp = await fetch(`/api/search/pages?ids=${json}`);
+      const resp = await fetch(`/api/search/pages?term=${term}`);
       const pages = await resp.json();
 
       this.results.pages = pages;
 
-      return text;
+      return pages;
     } catch (err) {
       return err;
     }
