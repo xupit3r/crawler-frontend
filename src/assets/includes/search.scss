@@ -29,3 +29,42 @@
     flex-direction: row;
   }
 }
+
+
+.search-suggestions {
+  margin: 1rem 0 2rem 0;
+
+  h3 {
+    padding: 0;
+    margin: .5rem 0 0 0;
+  }
+
+  .suggestion-tag {
+    padding: 0.4rem;
+    background-color: $blah_color;
+    color: $backgound_color;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $subtle_color;
+    }
+  }
+
+  .suggestions-loading {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+    padding: 1rem 0;
+    
+    .loader {
+      font-size: 1rem;
+    }
+
+    span {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

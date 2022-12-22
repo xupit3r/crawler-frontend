@@ -6,7 +6,8 @@ const state = () => ({
     textSearch: ''
   },
   results: {
-    pages: []
+    pages: [],
+    suggestions: []
   }
 });
 
@@ -64,6 +65,18 @@ const actions = {
       this.results.pages = pages;
 
       return pages;
+    } catch (err) {
+      return err;
+    }
+  },
+  async getSuggestions (term) {
+    try {
+      const resp = await fetch(`/api/search/pages/suggestions?term=${term}`);
+      const suggestions = await resp.json();
+
+      this.results.suggestions = suggestions;
+
+      return suggestions;
     } catch (err) {
       return err;
     }
