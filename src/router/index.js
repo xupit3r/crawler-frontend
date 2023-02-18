@@ -6,6 +6,7 @@ import Pages from '@/views/Pages.vue';
 import Queue from '@/views/Queue.vue';
 import Cooldown from '@/views/Cooldown.vue';
 import Page from '@/views/Page.vue';
+import Site from '@/views/Site.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -33,6 +34,10 @@ const router = createRouter({
     path: '/page/:id',
     name: 'page',
     component: Page
+  }, {
+    path: '/site/:id',
+    name: 'site',
+    component: Site
   }]
 })
 
