@@ -23,13 +23,12 @@ const nav = [{
 }];
 
 const shownSites = computed(() => {
-  if (state.filterText) {
-    return sitesStore.sites.filter(site => {
-      return site.name.indexOf(state.filterText) > -1
-    });
-  }
+  const entries = (state.filterText
+    ? sitesStore.sites.filter(site => site.name.indexOf(state.filterText) > -1)
+    : sitesStore.sites
+  );
 
-  return sitesStore.sites.slice(0, state.show);
+  return entries.slice(0, state.show);
 });
 
 function showMore () {
