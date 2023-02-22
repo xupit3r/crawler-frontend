@@ -6,6 +6,7 @@ import PageCard from '@/components/PageCard.vue';
 import PageSuggestionTag from '@/components/PageSuggestionTag.vue';
 import Loader from '@/components/Loader.vue';
 import { usePagesStore } from '@/stores/pages';
+import Search from '@/components/Search.vue';
 
 const pagesStore = usePagesStore();
 
@@ -73,17 +74,9 @@ if (pagesStore.filter.textSearch.length > 0) {
 
 <template>
   <RainbowNav :nav="nav" />
-  <div class="content-actions actions search">
-    <div class="input-field search-field">
-      <label class="label">Search</label>
-      <input type="text" 
-             name="search" 
-             class="input-search"
-             :value="pagesStore.filter.textSearch"
-             @input.stop="triggerSearch" />
-      <button v-show="showClear" class="clear-button" @click="clearSearch">&#215;</button>
-    </div>
-  </div>
+  <Search :term="pagesStore.filter.textSearch" 
+          :triggerSearch="triggerSearch" 
+          :clearSearch="clearSearch" />
 
   <div v-if="pagesStore.results.suggestions.length"
        class="content-flex column search-suggestions">
