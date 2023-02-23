@@ -25,28 +25,6 @@ const state = reactive({
   pageText: {}
 });
 
-const nav = computed(() => {
-  if (state.url.length) {
-    return [{
-      title: 'Dashboard',
-      to: 'dashboard'
-    }, {
-      title: 'Pages',
-      to: 'pages'
-    }, {
-      title: state.url
-    }];
-  }
-
-  return [{
-    title: 'Dashboard',
-    to: 'dashboard'
-  }, {
-    title: 'Pages',
-    to: 'pages'
-  }]
-});
-
 const showTextSummary = computed(() => {
   return (
     state.pageText.text &&
@@ -77,7 +55,7 @@ pagesStore.getPageText(pageId).then(pageText => {
 </script>
 
 <template>
-  <RainbowNav :nav="nav" :visit="state.url" />
+  <RainbowNav :visit="state.url" />
   <PageTextSummary v-if="showTextSummary" 
                    :summary="state.summary"
                    :pageText="state.pageText" />

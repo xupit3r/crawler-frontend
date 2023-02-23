@@ -13,11 +13,6 @@ const state = reactive({
   loading: true
 });
 
-const nav = [{
-  title: 'Dashboard',
-  to: 'dashboard'
-}];
-
 // get initial data for screen
 Promise.all([
   overviewStore.getUpNext(),
@@ -28,7 +23,7 @@ Promise.all([
 </script>
 
 <template>
-  <RainbowNav :nav="nav" />
+  <RainbowNav />
   <Loader v-if="state.loading" />
   <div v-else>
     <DashboardCounts :counts="overviewStore.counts" />

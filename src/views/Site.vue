@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSitesStore } from '@/stores/sites';
 import RainbowNav from '@/components/RainbowNav.vue';
@@ -16,18 +16,6 @@ const state = reactive({
   pages: []
 });
 
-const nav = computed(() => {
-  return [{
-    title: 'Dashboard',
-    to: 'dashboard'
-  }, {
-    title: 'Sites',
-    to: 'sites'
-  }, {
-    title: state.name
-  }]
-});
-
 sitesStore.getSite(siteId).then(site => {
   state._id = site._id;
   state.name = site.name;
@@ -37,7 +25,7 @@ sitesStore.getSite(siteId).then(site => {
 </script>
 
 <template>
-  <RainbowNav :nav="nav" :visit="state.url" />
+  <RainbowNav :visit="state.url" />
   <div class="content-flex row row-wrap">
     <PageCard v-for="page in state.pages" :page="page" />
   </div>

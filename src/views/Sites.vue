@@ -15,14 +15,6 @@ const state = reactive({
   filterText: ''
 });
 
-const nav = [{
-  title: 'Dashboard',
-  to: 'dashboard'
-}, {
-  title: 'Sites',
-  to: 'sites'
-}];
-
 const shownSites = computed(() => {
   const entries = (state.filterText
     ? sitesStore.sites.filter(site => site.name.indexOf(state.filterText) > -1)
@@ -46,7 +38,7 @@ sitesStore.getSites().finally(() => state.loading = false);
 </script>
 
 <template>
-  <RainbowNav :nav="nav" />
+  <RainbowNav />
   <Loader v-if="state.loading" />
   <Search v-if="!state.loading"
           :term="state.filterText"

@@ -1,22 +1,21 @@
 <script setup>
+import { useRoute } from 'vue-router';
 import { computed } from '@vue/reactivity';
 
 const props = defineProps({
-  nav: {
-    type: Array,
-    default: () => []
-  },
   visit: {
     type: String,
     default: ''
   }
 });
 
+const route = useRoute();
+
 const currentColor = '#F8F988';
 const others = '#C0EEE4';
 
 const links = computed(() => {
-  return props.nav.map((item, idx, arr) => ({
+  return route.meta.nav.map((item, idx, arr) => ({
     ...item,
     key: `${item.to}-${idx}`,
     color: idx === arr.length - 1 ? currentColor : others

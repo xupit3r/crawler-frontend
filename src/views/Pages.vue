@@ -17,17 +17,6 @@ const state = reactive({
   requestingSuggestions: false
 });
 
-const nav = [{
-  title: 'Dashboard',
-  to: 'dashboard'
-}, {
-  title: 'Pages'
-}];
-
-const showClear = computed(() => {
-  return state.searched && pagesStore.filter.textSearch.length > 0;
-});
-
 const hasTerm = computed(() => {
   return pagesStore.filter.textSearch.length > 0;
 });
@@ -73,7 +62,7 @@ if (pagesStore.filter.textSearch.length > 0) {
 </script>
 
 <template>
-  <RainbowNav :nav="nav" />
+  <RainbowNav />
   <Search :term="pagesStore.filter.textSearch" 
           :triggerSearch="triggerSearch" 
           :clearSearch="clearSearch" />
