@@ -5,6 +5,7 @@ import SiteCard from '@/components/SiteCard.vue';
 import { useSitesStore } from '@/stores/sites';
 import Loader from '@/components/Loader.vue';
 import Search from '@/components/Search.vue';
+import ListLimited from '@/components/ListLimited.vue';
 
 const sitesStore = useSitesStore();
 
@@ -51,11 +52,7 @@ sitesStore.getSites().finally(() => state.loading = false);
           :term="state.filterText"
           :triggerSearch="triggerSearch"
           :clearSearch="clearSearch" />
-
-  <div v-if="!state.loading " class="content-flex row row-wrap">
+  <ListLimited v-if="!state.loading" :showMore="showMore">
     <SiteCard v-for="site in shownSites" :site="site" />
-  </div>
-  <div v-if="!state.loading" class="content-centered content-actions">
-    <button class="" @click="showMore">More</button>
-  </div>
+  </ListLimited>
 </template>
